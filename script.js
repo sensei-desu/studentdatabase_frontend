@@ -1,145 +1,91 @@
-const API_URL =
+const API =
     "https://studentdatabasemanagement-production.up.railway.app";
 
 
-let selectedStudentId = null;
+let students = [];
 
-let allStudents = [];
-
-
-// ==========================================
-// CHECK BACKEND CONNECTION
-// ==========================================
-
-async function checkBackend() {
-
-    const dot =
-        document.getElementById("statusDot");
-
-    const text =
-        document.getElementById("statusText");
+let selectedStudent = null;
 
 
-    try {
-
-        const response =
-            await fetch(API_URL);
-
-
-        if (!response.ok) {
-
-            throw new Error(
-                "Backend unavailable"
-            );
-
-        }
-
-
-        dot.style.background =
-            "#22c55e";
-
-        text.textContent =
-            "Backend connected";
-
-
-    } catch (error) {
-
-        dot.style.background =
-            "#ef4444";
-
-        text.textContent =
-            "Backend offline";
-
-    }
-
-}
-
-
-
-// ==========================================
-// LOAD ALL STUDENTS
-// ==========================================
+// ======================================
+// LOAD STUDENTS
+// ======================================
 
 async function loadStudents() {
-
-    const list =
-        document.getElementById(
-            "studentList"
-        );
-
 
     try {
 
         const response =
             await fetch(
-                `${API_URL}/students`
+                `${API}/students`
             );
 
 
         if (!response.ok) {
 
             throw new Error(
-                "Failed to load students"
+                "Backend error"
             );
 
         }
 
 
-        allStudents =
+        students =
             await response.json();
 
 
-        displayStudents(
-            allStudents
+        renderStudents(
+            students
         );
+
+
+        updateStats();
 
 
     } catch (error) {
 
-        list.innerHTML = `
-            <div class="empty">
-                Could not connect to the backend.
-            </div>
-        `;
+        console.error(error);
 
     }
 
 }
 
 
+// ======================================
+// RENDER STUDENTS
+// ======================================
 
-// ==========================================
-// DISPLAY STUDENTS
-// ==========================================
+function renderStudents(
+    data
+) {
 
-function displayStudents(students) {
-
-    const list =
+    const table =
         document.getElementById(
-            "studentList"
+            "studentTable"
         );
 
 
-    const count =
-        document.getElementById(
-            "studentCount"
-        );
+    if (data.length === 0) {
 
+        table.innerHTML = `
 
-    count.textContent =
-        `${students.length} student${
-            students.length !== 1
-                ? "s"
-                : ""
-        }`;
+            <tr>
 
+                <td
+                    colspan="5"
+                    style="
+                    text-align:center;
+                    padding:50px;
+                    color:#98a2b3;
+                    "
+                >
 
-    if (students.length === 0) {
+                    No students yet.
 
-        list.innerHTML = `
-            <div class="empty">
-                No students found.
-            </div>
+                </td>
+
+            </tr>
+
         `;
 
         return;
@@ -147,190 +93,306 @@ function displayStudents(students) {
     }
 
 
-    list.innerHTML = "";
+    table.innerHTML = "";
 
 
-    students.forEach(student => {
+    data.forEach(student => {
 
-        const div =
+        const row =
             document.createElement(
-                "div"
+                "tr"
             );
 
 
-        div.className =
-            "student";
+        const initial =
+            student.name
+                .charAt(0)
+                .toUpperCase();
 
 
-        div.innerHTML = `
+        row.innerHTML = `
 
-            <div class="student-left">
+            <td>
 
-                <div class="student-name">
-                    ${escapeHTML(
-                        student.name
-                    )}
+                <div class="student-cell">
+
+                    <div class="avatar">
+
+                        ${initial}
+
+                    </div>
+
+                    <div>
+
+                        <div class="student-name">
+
+                            ${escapeHTML(
+                                student.name
+                            )}
+
+                        </div>
+
+                        <div class="student-sub">
+
+                            Student
+
+                        </div>
+
+                    </div>
+
                 </div>
 
-                <div class="student-id">
-                    ID:
-                    ${escapeHTML(
-                        student.student_id
-                    )}
-                </div>
-
-            </div>
+            </td>
 
 
-            <button
-                class="view-button"
-                onclick="viewStudent(
-                    '${escapeJS(
-                        student.student_id
-                    )}'
-                )"
-            >
-                View Details
-            </button>
+            <td>
+
+                ${escapeHTML(
+                    student.student_id
+                )}
+
+            </td>
+
+
+            <td>
+
+                <span
+                    class="subject-badge"
+                >
+
+                    ${student.subjects.length}
+                    subject${
+                        student.subjects.length !== 1
+                            ? "s"
+                            : ""
+                    }
+
+                </span>
+
+            </td>
+
+
+            <td>
+
+                <span class="average">
+
+                    ${student.average.toFixed(2)}
+
+                </span>
+
+            </td>
+
+
+            <td>
+
+                <button
+                    class="view"
+                    onclick="viewStudent(
+                        '${escapeJS(
+                            student.student_id
+                        )}'
+                    )"
+                >
+
+                    View
+
+                </button>
+
+            </td>
 
         `;
 
 
-        list.appendChild(div);
+        table.appendChild(row);
 
     });
 
 }
 
 
+// ======================================
+// STATS
+// ======================================
 
-// ==========================================
+function updateStats() {
+
+    document.getElementById(
+        "totalStudents"
+    ).textContent =
+        students.length;
+
+
+    let subjects = 0;
+
+    let grades = [];
+
+
+    students.forEach(student => {
+
+        subjects +=
+            student.subjects.length;
+
+
+        student.subjects.forEach(
+            subject => {
+
+                grades.push(
+                    subject.grade
+                );
+
+            }
+        );
+
+    });
+
+
+    document.getElementById(
+        "totalSubjects"
+    ).textContent =
+        subjects;
+
+
+    const average =
+        grades.length
+            ? grades.reduce(
+                (a, b) => a + b,
+                0
+            ) / grades.length
+            : 0;
+
+
+    document.getElementById(
+        "overallAverage"
+    ).textContent =
+        average.toFixed(2);
+
+}
+
+
+// ======================================
+// ADD STUDENT MODAL
+// ======================================
+
+function openAddStudent() {
+
+    document.getElementById(
+        "studentModal"
+    ).classList.add("show");
+
+}
+
+
+function closeModal() {
+
+    document.getElementById(
+        "studentModal"
+    ).classList.remove("show");
+
+}
+
+
+// ======================================
 // ADD STUDENT
-// ==========================================
+// ======================================
 
-document
-    .getElementById("studentForm")
-    .addEventListener(
-        "submit",
-        async function(event) {
+document.getElementById(
+    "studentForm"
+).addEventListener(
+    "submit",
+    async function(event) {
 
-            event.preventDefault();
-
-
-            const name =
-                document
-                    .getElementById(
-                        "studentName"
-                    )
-                    .value
-                    .trim();
+        event.preventDefault();
 
 
-            const studentId =
-                document
-                    .getElementById(
-                        "studentId"
-                    )
-                    .value
-                    .trim();
+        const name =
+            document.getElementById(
+                "studentName"
+            ).value.trim();
 
 
-            const message =
-                document.getElementById(
-                    "studentMessage"
+        const id =
+            document.getElementById(
+                "studentId"
+            ).value.trim();
+
+
+        try {
+
+            const response =
+                await fetch(
+                    `${API}/students`,
+                    {
+
+                        method: "POST",
+
+                        headers: {
+
+                            "Content-Type":
+                                "application/json"
+
+                        },
+
+                        body:
+                            JSON.stringify({
+
+                                name: name,
+
+                                student_id: id
+
+                            })
+
+                    }
                 );
 
 
-            try {
-
-                const response =
-                    await fetch(
-                        `${API_URL}/students`,
-                        {
-
-                            method: "POST",
-
-                            headers: {
-                                "Content-Type":
-                                    "application/json"
-                            },
-
-                            body:
-                                JSON.stringify({
-
-                                    name: name,
-
-                                    student_id:
-                                        studentId
-
-                                })
-
-                        }
-                    );
+            const data =
+                await response.json();
 
 
-                const data =
-                    await response.json();
+            if (!response.ok) {
 
-
-                if (!response.ok) {
-
-                    throw new Error(
-                        data.error ||
-                        "Failed to add student"
-                    );
-
-                }
-
-
-                message.textContent =
-                    "Student added successfully!";
-
-                message.className =
-                    "message success";
-
-
-                document
-                    .getElementById(
-                        "studentForm"
-                    )
-                    .reset();
-
-
-                await loadStudents();
-
-
-            } catch (error) {
-
-                message.textContent =
-                    error.message;
-
-                message.className =
-                    "message error";
+                throw new Error(
+                    data.error
+                );
 
             }
 
+
+            closeModal();
+
+
+            document.getElementById(
+                "studentForm"
+            ).reset();
+
+
+            await loadStudents();
+
+
+        } catch (error) {
+
+            alert(
+                error.message
+            );
+
         }
-    );
+
+    }
+);
 
 
-
-// ==========================================
+// ======================================
 // VIEW STUDENT
-// ==========================================
+// ======================================
 
-async function viewStudent(
-    studentId
-) {
+async function viewStudent(id) {
 
     try {
 
         const response =
             await fetch(
-                `${API_URL}/students/${
-                    encodeURIComponent(
-                        studentId
-                    )
+                `${API}/students/${
+                    encodeURIComponent(id)
                 }`
             );
 
@@ -342,27 +404,14 @@ async function viewStudent(
         if (!response.ok) {
 
             throw new Error(
-                data.error ||
-                "Student not found"
+                data.error
             );
 
         }
 
 
-        selectedStudentId =
-            studentId;
-
-
-        document.getElementById(
-            "detailsCard"
-        ).style.display =
-            "block";
-
-
-        document.getElementById(
-            "detailId"
-        ).textContent =
-            data.student_id;
+        selectedStudent =
+            data;
 
 
         document.getElementById(
@@ -372,31 +421,35 @@ async function viewStudent(
 
 
         document.getElementById(
-            "detailStudentName"
+            "detailId"
         ).textContent =
-            data.name;
+            `ID: ${data.student_id}`;
 
 
         document.getElementById(
-            "detailGpa"
+            "detailAverage"
         ).textContent =
-            Number(
-                data.gpa
-            ).toFixed(2);
+            data.average.toFixed(2);
 
 
-        displayGrades(
-            data.grades
+        document.getElementById(
+            "profileAvatar"
+        ).textContent =
+            data.name
+                .charAt(0)
+                .toUpperCase();
+
+
+        renderSubjects(
+            data.subjects
         );
 
 
-        document
-            .getElementById(
-                "detailsCard"
-            )
-            .scrollIntoView({
-                behavior: "smooth"
-            });
+        document.getElementById(
+            "detailsModal"
+        ).classList.add(
+            "show"
+        );
 
 
     } catch (error) {
@@ -410,28 +463,38 @@ async function viewStudent(
 }
 
 
+// ======================================
+// SUBJECTS
+// ======================================
 
-// ==========================================
-// DISPLAY GRADES
-// ==========================================
-
-function displayGrades(
-    grades
+function renderSubjects(
+    subjects
 ) {
 
     const container =
         document.getElementById(
-            "gradesList"
+            "subjectList"
         );
 
 
-    if (
-        !grades ||
-        grades.length === 0
-    ) {
+    if (!subjects.length) {
 
-        container.textContent =
-            "No grades yet.";
+        container.innerHTML = `
+
+            <div
+                style="
+                padding:25px;
+                text-align:center;
+                color:#98a2b3;
+                font-size:12px;
+                "
+            >
+
+                No subjects added yet.
+
+            </div>
+
+        `;
 
         return;
 
@@ -441,75 +504,92 @@ function displayGrades(
     container.innerHTML = "";
 
 
-    grades.forEach(grade => {
+    subjects.forEach(item => {
 
-        const span =
+        const row =
             document.createElement(
-                "span"
+                "div"
             );
 
 
-        span.className =
-            "grade";
+        row.className =
+            "subject-row";
 
 
-        span.textContent =
-            Number(
-                grade
-            ).toFixed(2);
+        row.innerHTML = `
+
+            <span>
+
+                ${escapeHTML(
+                    item.subject
+                )}
+
+            </span>
 
 
-        container.appendChild(
-            span
-        );
+            <span class="grade">
+
+                ${item.grade.toFixed(2)}
+
+            </span>
+
+        `;
+
+
+        container.appendChild(row);
 
     });
 
 }
 
 
+// ======================================
+// ADD SUBJECT
+// ======================================
 
-// ==========================================
-// ADD GRADE
-// ==========================================
+async function addSubject() {
 
-async function addGrade() {
-
-    if (!selectedStudentId) {
+    if (!selectedStudent) {
 
         return;
 
     }
 
 
-    const input =
+    const subject =
         document.getElementById(
-            "gradeInput"
-        );
+            "subjectInput"
+        ).value.trim();
 
 
     const grade =
-        Number(input.value);
-
-
-    const message =
-        document.getElementById(
-            "gradeMessage"
+        Number(
+            document.getElementById(
+                "gradeInput"
+            ).value
         );
 
 
+    if (!subject) {
+
+        alert(
+            "Enter a subject."
+        );
+
+        return;
+
+    }
+
+
     if (
-        input.value === "" ||
         isNaN(grade) ||
         grade < 0 ||
         grade > 100
     ) {
 
-        message.textContent =
-            "Enter a grade between 0 and 100.";
-
-        message.className =
-            "message error";
+        alert(
+            "Grade must be between 0 and 100."
+        );
 
         return;
 
@@ -520,23 +600,31 @@ async function addGrade() {
 
         const response =
             await fetch(
-                `${API_URL}/students/${
+                `${API}/students/${
                     encodeURIComponent(
-                        selectedStudentId
+                        selectedStudent.student_id
                     )
-                }/grades`,
+                }/subjects`,
                 {
 
                     method: "POST",
 
                     headers: {
+
                         "Content-Type":
                             "application/json"
+
                     },
 
                     body:
                         JSON.stringify({
-                            grade: grade
+
+                            subject:
+                                subject,
+
+                            grade:
+                                grade
+
                         })
 
                 }
@@ -550,132 +638,27 @@ async function addGrade() {
         if (!response.ok) {
 
             throw new Error(
-                data.error ||
-                "Failed to add grade"
+                data.error
             );
 
         }
 
 
-        message.textContent =
-            "Grade added successfully!";
-
-        message.className =
-            "message success";
-
-
-        input.value = "";
-
-
-        await viewStudent(
-            selectedStudentId
-        );
-
-
-    } catch (error) {
-
-        message.textContent =
-            error.message;
-
-        message.className =
-            "message error";
-
-    }
-
-}
-
-
-
-// ==========================================
-// EDIT STUDENT
-// ==========================================
-
-async function editStudent() {
-
-    if (!selectedStudentId) {
-
-        return;
-
-    }
-
-
-    const currentName =
         document.getElementById(
-            "detailStudentName"
-        ).textContent;
+            "subjectInput"
+        ).value = "";
 
 
-    const newName =
-        prompt(
-            "Enter new student name:",
-            currentName
-        );
-
-
-    if (
-        !newName ||
-        !newName.trim()
-    ) {
-
-        return;
-
-    }
-
-
-    try {
-
-        const response =
-            await fetch(
-                `${API_URL}/students/${
-                    encodeURIComponent(
-                        selectedStudentId
-                    )
-                }`,
-                {
-
-                    method: "PUT",
-
-                    headers: {
-                        "Content-Type":
-                            "application/json"
-                    },
-
-                    body:
-                        JSON.stringify({
-
-                            name:
-                                newName.trim()
-
-                        })
-
-                }
-            );
-
-
-        const data =
-            await response.json();
-
-
-        if (!response.ok) {
-
-            throw new Error(
-                data.error ||
-                "Failed to update student"
-            );
-
-        }
+        document.getElementById(
+            "gradeInput"
+        ).value = "";
 
 
         await loadStudents();
 
 
         await viewStudent(
-            selectedStudentId
-        );
-
-
-        alert(
-            "Student updated successfully!"
+            selectedStudent.student_id
         );
 
 
@@ -690,27 +673,27 @@ async function editStudent() {
 }
 
 
+// ======================================
+// EDIT STUDENT
+// ======================================
 
-// ==========================================
-// DELETE STUDENT
-// ==========================================
+async function editStudent() {
 
-async function deleteStudent() {
-
-    if (!selectedStudentId) {
+    if (!selectedStudent) {
 
         return;
 
     }
 
 
-    const confirmed =
-        confirm(
-            "Are you sure you want to delete this student?"
+    const name =
+        prompt(
+            "Enter new student name:",
+            selectedStudent.name
         );
 
 
-    if (!confirmed) {
+    if (!name || !name.trim()) {
 
         return;
 
@@ -721,9 +704,98 @@ async function deleteStudent() {
 
         const response =
             await fetch(
-                `${API_URL}/students/${
+                `${API}/students/${
                     encodeURIComponent(
-                        selectedStudentId
+                        selectedStudent.student_id
+                    )
+                }`,
+                {
+
+                    method: "PUT",
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/json"
+
+                    },
+
+                    body:
+                        JSON.stringify({
+
+                            name:
+                                name.trim()
+
+                        })
+
+                }
+            );
+
+
+        if (!response.ok) {
+
+            const data =
+                await response.json();
+
+            throw new Error(
+                data.error
+            );
+
+        }
+
+
+        await loadStudents();
+
+
+        await viewStudent(
+            selectedStudent.student_id
+        );
+
+
+    } catch (error) {
+
+        alert(
+            error.message
+        );
+
+    }
+
+}
+
+
+// ======================================
+// DELETE
+// ======================================
+
+async function deleteStudent() {
+
+    if (!selectedStudent) {
+
+        return;
+
+    }
+
+
+    const confirmDelete =
+        confirm(
+            `Delete ${selectedStudent.name}?`
+        );
+
+
+    if (!confirmDelete) {
+
+        return;
+
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                `${API}/students/${
+                    encodeURIComponent(
+                        selectedStudent.student_id
                     )
                 }`,
                 {
@@ -734,15 +806,13 @@ async function deleteStudent() {
             );
 
 
-        const data =
-            await response.json();
-
-
         if (!response.ok) {
 
+            const data =
+                await response.json();
+
             throw new Error(
-                data.error ||
-                "Failed to delete student"
+                data.error
             );
 
         }
@@ -754,11 +824,6 @@ async function deleteStudent() {
         await loadStudents();
 
 
-        alert(
-            "Student deleted successfully!"
-        );
-
-
     } catch (error) {
 
         alert(
@@ -770,80 +835,68 @@ async function deleteStudent() {
 }
 
 
-
-// ==========================================
+// ======================================
 // CLOSE DETAILS
-// ==========================================
+// ======================================
 
 function closeDetails() {
 
     document.getElementById(
-        "detailsCard"
-    ).style.display =
-        "none";
+        "detailsModal"
+    ).classList.remove(
+        "show"
+    );
 
-
-    selectedStudentId =
-        null;
+    selectedStudent = null;
 
 }
 
 
-
-// ==========================================
+// ======================================
 // SEARCH
-// ==========================================
+// ======================================
 
-document
-    .getElementById(
-        "searchInput"
-    )
-    .addEventListener(
-        "input",
-        function() {
+document.getElementById(
+    "searchInput"
+).addEventListener(
+    "input",
+    function() {
 
-            const search =
-                this.value
-                    .toLowerCase()
-                    .trim();
+        const query =
+            this.value
+                .toLowerCase()
+                .trim();
 
 
-            const filtered =
-                allStudents.filter(
-                    student =>
+        const filtered =
+            students.filter(
+                student =>
 
-                        student.name
-                            .toLowerCase()
-                            .includes(
-                                search
-                            )
+                    student.name
+                        .toLowerCase()
+                        .includes(query)
 
-                        ||
+                    ||
 
-                        student.student_id
-                            .toLowerCase()
-                            .includes(
-                                search
-                            )
-                );
-
-
-            displayStudents(
-                filtered
+                    student.student_id
+                        .toLowerCase()
+                        .includes(query)
             );
 
-        }
-    );
+
+        renderStudents(
+            filtered
+        );
+
+    }
+);
 
 
+// ======================================
+// SECURITY
+// ======================================
 
-// ==========================================
-// SECURITY HELPERS
-// ==========================================
-
-function escapeHTML(
-    value
-) {
+function escapeHTML(value) {
 
     return String(value)
 
@@ -875,9 +928,7 @@ function escapeHTML(
 }
 
 
-function escapeJS(
-    value
-) {
+function escapeJS(value) {
 
     return String(value)
 
@@ -894,11 +945,8 @@ function escapeJS(
 }
 
 
-
-// ==========================================
-// START APPLICATION
-// ==========================================
-
-checkBackend();
+// ======================================
+// START
+// ======================================
 
 loadStudents();
