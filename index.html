@@ -2,263 +2,497 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Student Database Management</title>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <link rel="stylesheet" href="style.css">
+    <title>StudentHub</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
 </head>
+
 
 <body>
 
-    <header class="header">
+
+<!-- SIDEBAR -->
+
+<aside class="sidebar">
+
+    <div class="brand">
+
+        <div class="brand-icon">
+            S
+        </div>
 
         <div>
-            <h1>Student Database</h1>
-            <p>Student Management System</p>
+
+            <h2>StudentHub</h2>
+
+            <span>
+                Management System
+            </span>
+
         </div>
 
-        <div class="backend-status">
-            <span id="statusDot"></span>
-            <span id="statusText">Checking backend...</span>
+    </div>
+
+
+    <nav>
+
+        <a class="active">
+
+            <span>▦</span>
+
+            Dashboard
+
+        </a>
+
+
+        <a>
+
+            <span>♙</span>
+
+            Students
+
+        </a>
+
+    </nav>
+
+
+    <div class="sidebar-bottom">
+
+        <span class="online-dot"></span>
+
+        Backend Connected
+
+    </div>
+
+</aside>
+
+
+
+<!-- MAIN -->
+
+<div class="main">
+
+
+    <!-- TOPBAR -->
+
+    <header class="topbar">
+
+        <div>
+
+            <h1>
+                Student Dashboard
+            </h1>
+
+            <p>
+                Manage students, subjects and grades.
+            </p>
+
         </div>
+
+
+        <button
+            class="primary"
+            onclick="openAddStudent()"
+        >
+
+            + Add Student
+
+        </button>
 
     </header>
 
 
-    <main>
 
-        <!-- ADD STUDENT -->
+    <!-- STATS -->
 
-        <section class="card">
+    <section class="stats">
 
-            <div class="card-header">
-                <div>
-                    <h2>Add Student</h2>
-                    <p>Add a new student to the database.</p>
-                </div>
+
+        <div class="stat-card">
+
+            <div class="stat-icon blue">
+                ♙
+            </div>
+
+            <div>
+
+                <span>
+                    Total Students
+                </span>
+
+                <strong id="totalStudents">
+                    0
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon purple">
+                ◈
+            </div>
+
+            <div>
+
+                <span>
+                    Total Subjects
+                </span>
+
+                <strong id="totalSubjects">
+                    0
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon green">
+                ✓
+            </div>
+
+            <div>
+
+                <span>
+                    Overall Average
+                </span>
+
+                <strong id="overallAverage">
+                    0.00
+                </strong>
+
+            </div>
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- STUDENTS -->
+
+    <section class="panel">
+
+
+        <div class="panel-header">
+
+            <div>
+
+                <h2>
+                    Students
+                </h2>
+
+                <p>
+                    All registered students
+                </p>
+
             </div>
 
 
-            <form id="studentForm">
+            <div class="search-box">
 
-                <div class="input-group">
-
-                    <label for="studentName">
-                        Student Name
-                    </label>
-
-                    <input
-                        type="text"
-                        id="studentName"
-                        placeholder="e.g. Aman"
-                        required
-                    >
-
-                </div>
-
-
-                <div class="input-group">
-
-                    <label for="studentId">
-                        Student ID
-                    </label>
-
-                    <input
-                        type="text"
-                        id="studentId"
-                        placeholder="e.g. 101"
-                        required
-                    >
-
-                </div>
-
-
-                <button type="submit">
-                    + Add Student
-                </button>
-
-            </form>
-
-
-            <p id="studentMessage" class="message"></p>
-
-        </section>
-
-
-
-        <!-- STUDENT LIST -->
-
-        <section class="card">
-
-            <div class="section-top">
-
-                <div>
-                    <h2>Students</h2>
-
-                    <p id="studentCount">
-                        Loading...
-                    </p>
-                </div>
-
+                <span>⌕</span>
 
                 <input
-                    type="text"
                     id="searchInput"
-                    class="search"
-                    placeholder="Search by name or ID..."
+                    placeholder="Search students..."
                 >
 
             </div>
 
+        </div>
 
-            <div id="studentList">
 
-                <div class="empty">
-                    Loading students...
-                </div>
+
+        <div class="student-table">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>STUDENT</th>
+
+                        <th>STUDENT ID</th>
+
+                        <th>SUBJECTS</th>
+
+                        <th>AVERAGE</th>
+
+                        <th></th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody
+                    id="studentTable"
+                >
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+    </section>
+
+
+
+</div>
+
+
+
+<!-- STUDENT MODAL -->
+
+<div
+    id="studentModal"
+    class="modal"
+>
+
+    <div class="modal-box">
+
+
+        <button
+            class="modal-close"
+            onclick="closeModal()"
+        >
+            ×
+        </button>
+
+
+        <div class="modal-title">
+
+            <div class="modal-avatar">
+                +
+            </div>
+
+            <div>
+
+                <h2>
+                    Add Student
+                </h2>
+
+                <p>
+                    Create a new student record
+                </p>
 
             </div>
 
-        </section>
+        </div>
 
 
-
-        <!-- STUDENT DETAILS -->
-
-        <section
-            class="card"
-            id="detailsCard"
-            style="display: none;"
+        <form
+            id="studentForm"
         >
 
-            <div class="section-top">
+            <label>
+                Student Name
+            </label>
 
-                <div>
-                    <h2>Student Details</h2>
+            <input
+                id="studentName"
+                placeholder="Enter student name"
+                required
+            >
 
-                    <p id="detailName"></p>
-                </div>
+
+            <label>
+                Student ID
+            </label>
+
+            <input
+                id="studentId"
+                placeholder="e.g. STU001"
+                required
+            >
 
 
-                <button
-                    class="close-button"
-                    onclick="closeDetails()"
-                >
-                    ×
-                </button>
+            <button
+                class="primary full"
+                type="submit"
+            >
+
+                Create Student
+
+            </button>
+
+
+        </form>
+
+    </div>
+
+</div>
+
+
+
+<!-- DETAILS MODAL -->
+
+<div
+    id="detailsModal"
+    class="modal"
+>
+
+    <div class="modal-box details-box">
+
+
+        <button
+            class="modal-close"
+            onclick="closeDetails()"
+        >
+            ×
+        </button>
+
+
+        <div class="student-profile">
+
+            <div
+                id="profileAvatar"
+                class="profile-avatar"
+            >
+                A
+            </div>
+
+
+            <div>
+
+                <h2 id="detailName">
+                    Student
+                </h2>
+
+                <p id="detailId">
+                    ID
+                </p>
 
             </div>
 
 
-            <div class="student-info">
+            <div class="average-box">
 
-                <div class="info-box">
+                <span>
+                    Average
+                </span>
 
-                    <span>Student ID</span>
-
-                    <strong id="detailId">
-                        -
-                    </strong>
-
-                </div>
-
-
-                <div class="info-box">
-
-                    <span>Name</span>
-
-                    <strong id="detailStudentName">
-                        -
-                    </strong>
-
-                </div>
-
-
-                <div class="info-box">
-
-                    <span>GPA</span>
-
-                    <strong id="detailGpa">
-                        0.00
-                    </strong>
-
-                </div>
+                <strong id="detailAverage">
+                    0.00
+                </strong>
 
             </div>
 
+        </div>
 
-            <div class="grades-section">
 
-                <h3>Grades</h3>
 
-                <div id="gradesList" class="grades-list">
-                    No grades yet.
-                </div>
+        <div class="subject-header">
+
+            <div>
+
+                <h3>
+                    Subjects & Grades
+                </h3>
+
+                <p>
+                    Academic performance
+                </p>
 
             </div>
 
+        </div>
 
-            <div class="add-grade">
+
+        <div
+            id="subjectList"
+            class="subject-list"
+        >
+        </div>
+
+
+
+        <!-- ADD SUBJECT -->
+
+        <div class="add-subject-box">
+
+            <h3>
+                Add Subject
+            </h3>
+
+
+            <div class="subject-inputs">
 
                 <input
-                    type="number"
+                    id="subjectInput"
+                    placeholder="Subject name"
+                >
+
+
+                <input
                     id="gradeInput"
-                    placeholder="Enter grade"
+                    type="number"
                     min="0"
                     max="100"
-                    step="0.01"
+                    placeholder="Grade"
                 >
 
-                <button onclick="addGrade()">
-                    Add Grade
+
+                <button
+                    class="primary"
+                    onclick="addSubject()"
+                >
+                    Add
                 </button>
 
             </div>
 
-
-            <p id="gradeMessage" class="message"></p>
-
-
-            <div class="student-actions">
-
-                <button
-                    class="edit-button"
-                    onclick="editStudent()"
-                >
-                    Edit Name
-                </button>
+        </div>
 
 
-                <button
-                    class="delete-button"
-                    onclick="deleteStudent()"
-                >
-                    Delete Student
-                </button>
+        <div class="detail-actions">
 
-            </div>
-
-        </section>
-
-    </main>
+            <button
+                class="secondary"
+                onclick="editStudent()"
+            >
+                Edit Name
+            </button>
 
 
-    <footer>
+            <button
+                class="danger"
+                onclick="deleteStudent()"
+            >
+                Delete Student
+            </button>
 
-        <p>
-            Student Database Management System
-        </p>
-
-        <p>
-            Frontend: GitHub Pages · Backend: Railway
-        </p>
-
-    </footer>
+        </div>
 
 
-    <script src="script.js"></script>
+    </div>
+
+</div>
+
+
+<script src="script.js"></script>
 
 </body>
 
