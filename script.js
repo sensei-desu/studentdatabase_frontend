@@ -300,7 +300,7 @@ function renderSubjects(subjects) {
         row.className = "subject-row";
 
         row.innerHTML = `
-            <span>${escapeHTML(item.subject)}</span>
+            <span>${escapeHTML(item.subject || item.name || item.subject_name || "Unknown Subject")}</span>
             <span class="grade">${Number(item.grade).toFixed(2)}</span>
         `;
 
