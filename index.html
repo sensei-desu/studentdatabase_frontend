@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Database Management</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header class="header">
+
+        <div>
+            <h1>Student Database</h1>
+            <p>Student Management System</p>
+        </div>
+
+        <div class="backend-status">
+            <span id="statusDot"></span>
+            <span id="statusText">Checking backend...</span>
+        </div>
+
+    </header>
+
+
+    <main>
+
+        <!-- ADD STUDENT -->
+
+        <section class="card">
+
+            <div class="card-header">
+                <div>
+                    <h2>Add Student</h2>
+                    <p>Add a new student to the database.</p>
+                </div>
+            </div>
+
+
+            <form id="studentForm">
+
+                <div class="input-group">
+
+                    <label for="studentName">
+                        Student Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="studentName"
+                        placeholder="e.g. Aman"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="input-group">
+
+                    <label for="studentId">
+                        Student ID
+                    </label>
+
+                    <input
+                        type="text"
+                        id="studentId"
+                        placeholder="e.g. 101"
+                        required
+                    >
+
+                </div>
+
+
+                <button type="submit">
+                    + Add Student
+                </button>
+
+            </form>
+
+
+            <p id="studentMessage" class="message"></p>
+
+        </section>
+
+
+
+        <!-- STUDENT LIST -->
+
+        <section class="card">
+
+            <div class="section-top">
+
+                <div>
+                    <h2>Students</h2>
+
+                    <p id="studentCount">
+                        Loading...
+                    </p>
+                </div>
+
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    class="search"
+                    placeholder="Search by name or ID..."
+                >
+
+            </div>
+
+
+            <div id="studentList">
+
+                <div class="empty">
+                    Loading students...
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- STUDENT DETAILS -->
+
+        <section
+            class="card"
+            id="detailsCard"
+            style="display: none;"
+        >
+
+            <div class="section-top">
+
+                <div>
+                    <h2>Student Details</h2>
+
+                    <p id="detailName"></p>
+                </div>
+
+
+                <button
+                    class="close-button"
+                    onclick="closeDetails()"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <div class="student-info">
+
+                <div class="info-box">
+
+                    <span>Student ID</span>
+
+                    <strong id="detailId">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div class="info-box">
+
+                    <span>Name</span>
+
+                    <strong id="detailStudentName">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div class="info-box">
+
+                    <span>GPA</span>
+
+                    <strong id="detailGpa">
+                        0.00
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="grades-section">
+
+                <h3>Grades</h3>
+
+                <div id="gradesList" class="grades-list">
+                    No grades yet.
+                </div>
+
+            </div>
+
+
+            <div class="add-grade">
+
+                <input
+                    type="number"
+                    id="gradeInput"
+                    placeholder="Enter grade"
+                    min="0"
+                    max="100"
+                    step="0.01"
+                >
+
+                <button onclick="addGrade()">
+                    Add Grade
+                </button>
+
+            </div>
+
+
+            <p id="gradeMessage" class="message"></p>
+
+
+            <div class="student-actions">
+
+                <button
+                    class="edit-button"
+                    onclick="editStudent()"
+                >
+                    Edit Name
+                </button>
+
+
+                <button
+                    class="delete-button"
+                    onclick="deleteStudent()"
+                >
+                    Delete Student
+                </button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+
+        <p>
+            Student Database Management System
+        </p>
+
+        <p>
+            Frontend: GitHub Pages · Backend: Railway
+        </p>
+
+    </footer>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
