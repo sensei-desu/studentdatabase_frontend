@@ -9,12 +9,7 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <meta
-        name="description"
-        content="StudentHub - Student Management System"
-    >
-
-    <title>StudentHub — Management System</title>
+    <title>StudentHub</title>
 
     <link
         rel="stylesheet"
@@ -24,720 +19,245 @@
 
 <body>
 
-<!-- =========================================================
-     APP SHELL
-========================================================= -->
+<!-- ======================================================
+     SIDEBAR
+====================================================== -->
 
-<div class="app-shell">
+<aside class="sidebar">
 
+    <div class="brand">
 
-    <!-- =====================================================
-         SIDEBAR
-    ====================================================== -->
+        <div class="brand-icon">
+            S
+        </div>
 
-    <aside class="sidebar">
+        <div>
+            <h2>StudentHub</h2>
+            <span>Management System</span>
+        </div>
 
-        <div class="sidebar-top">
+    </div>
 
-            <!-- BRAND -->
+    <nav>
 
-            <div class="brand">
+        <a class="active">
+            <span>▦</span>
+            Dashboard
+        </a>
 
-                <div class="brand-mark">
-                    <span>S</span>
-                </div>
+        <a>
+            <span>♙</span>
+            Students
+        </a>
 
-                <div class="brand-text">
+    </nav>
 
-                    <strong>
-                        StudentHub
-                    </strong>
+    <div class="sidebar-bottom">
 
-                    <span>
-                        Management System
-                    </span>
+        <span class="online-dot"></span>
 
-                </div>
+        Backend Connected
 
-            </div>
+    </div>
 
-
-            <!-- NAVIGATION -->
-
-            <div class="nav-section">
-
-                <span class="nav-label">
-                    WORKSPACE
-                </span>
-
-                <nav class="main-nav">
-
-                    <a
-                        href="#"
-                        class="nav-item active"
-                    >
-
-                        <span class="nav-icon">
-
-                            <svg
-                                viewBox="0 0 24 24"
-                                aria-hidden="true"
-                            >
-                                <rect
-                                    x="3"
-                                    y="3"
-                                    width="7"
-                                    height="7"
-                                    rx="1.5"
-                                />
-                                <rect
-                                    x="14"
-                                    y="3"
-                                    width="7"
-                                    height="7"
-                                    rx="1.5"
-                                />
-                                <rect
-                                    x="3"
-                                    y="14"
-                                    width="7"
-                                    height="7"
-                                    rx="1.5"
-                                />
-                                <rect
-                                    x="14"
-                                    y="14"
-                                    width="7"
-                                    height="7"
-                                    rx="1.5"
-                                />
-                            </svg>
-
-                        </span>
-
-                        <span>
-                            Dashboard
-                        </span>
-
-                    </a>
+</aside>
 
 
-                    <a
-                        href="#students"
-                        class="nav-item"
-                    >
+<!-- ======================================================
+     MAIN CONTENT
+====================================================== -->
 
-                        <span class="nav-icon">
+<div class="main">
 
-                            <svg
-                                viewBox="0 0 24 24"
-                                aria-hidden="true"
-                            >
-                                <path
-                                    d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"
-                                />
+    <!-- TOP BAR -->
 
-                                <circle
-                                    cx="9"
-                                    cy="7"
-                                    r="4"
-                                />
+    <header class="topbar">
 
-                                <path
-                                    d="M22 21v-2a4 4 0 0 0-3-3.87"
-                                />
+        <div>
 
-                                <path
-                                    d="M16 3.13a4 4 0 0 1 0 7.75"
-                                />
+            <h1>
+                Student Dashboard
+            </h1>
 
-                            </svg>
-
-                        </span>
-
-                        <span>
-                            Students
-                        </span>
-
-                    </a>
-
-                </nav>
-
-            </div>
-
-
-            <!-- SYSTEM STATUS -->
-
-            <div class="sidebar-status">
-
-                <div class="status-indicator">
-
-                    <span class="status-dot"></span>
-
-                    <div>
-
-                        <strong>
-                            System online
-                        </strong>
-
-                        <span>
-                            Backend connected
-                        </span>
-
-                    </div>
-
-                </div>
-
-            </div>
+            <p>
+                Manage students, programmes, semesters and academic records.
+            </p>
 
         </div>
 
+        <button
+            class="primary"
+            onclick="openAddStudent()"
+        >
+            + Add Student
+        </button>
 
-        <!-- SIDEBAR FOOTER -->
+    </header>
 
-        <div class="sidebar-footer">
 
-            <div class="security-note">
+    <!-- ==================================================
+         STATISTICS
+    ================================================== -->
 
-                <svg
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                >
-                    <path
-                        d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7l8-4z"
-                    />
+    <section class="stats">
 
-                    <path
-                        d="M9 12l2 2 4-4"
-                    />
-                </svg>
+        <!-- TOTAL STUDENTS -->
 
-                <span>
-                    Secure academic workspace
-                </span>
+        <div class="stat-card">
 
+            <div class="stat-icon blue">
+                ♙
             </div>
-
-        </div>
-
-    </aside>
-
-
-
-    <!-- =====================================================
-         MAIN CONTENT
-    ====================================================== -->
-
-    <main class="main">
-
-
-        <!-- =================================================
-             TOP HEADER
-        ================================================== -->
-
-        <header class="topbar">
-
-            <div class="breadcrumb">
-
-                <span>
-                    Workspace
-                </span>
-
-                <span class="breadcrumb-separator">
-                    /
-                </span>
-
-                <strong>
-                    Dashboard
-                </strong>
-
-            </div>
-
-
-            <div class="topbar-actions">
-
-                <button
-                    class="top-action"
-                    type="button"
-                    onclick="showLogin()"
-                >
-
-                    <svg
-                        viewBox="0 0 24 24"
-                        aria-hidden="true"
-                    >
-                        <path
-                            d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"
-                        />
-
-                        <path
-                            d="M10 17l5-5-5-5"
-                        />
-
-                        <path
-                            d="M15 12H3"
-                        />
-                    </svg>
-
-                    Login
-
-                </button>
-
-                <button
-                    class="top-action register-action"
-                    type="button"
-                    onclick="showRegister()"
-                >
-                    Create account
-                </button>
-
-            </div>
-
-        </header>
-
-
-
-        <!-- =================================================
-             ANNOUNCEMENT MARQUEE
-        ================================================== -->
-
-        <div class="announcement">
-
-            <div class="announcement-label">
-
-                <span class="announcement-pulse"></span>
-
-                <strong>
-                    SYSTEM UPDATE
-                </strong>
-
-            </div>
-
-
-            <div class="marquee">
-
-                <div class="marquee-track">
-
-                    <span>
-                        StudentHub is ready for academic record management
-                    </span>
-
-                    <span class="marquee-dot">
-                        •
-                    </span>
-
-                    <span>
-                        Manage students, programmes and semesters from one workspace
-                    </span>
-
-                    <span class="marquee-dot">
-                        •
-                    </span>
-
-                    <span>
-                        Your backend connection is active
-                    </span>
-
-                    <span class="marquee-dot">
-                        •
-                    </span>
-
-                    <span>
-                        StudentHub is ready for academic record management
-                    </span>
-
-                    <span class="marquee-dot">
-                        •
-                    </span>
-
-                    <span>
-                        Manage students, programmes and semesters from one workspace
-                    </span>
-
-                    <span class="marquee-dot">
-                        •
-                    </span>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-
-        <!-- =================================================
-             PAGE HERO
-        ================================================== -->
-
-        <section class="page-heading">
 
             <div>
 
-                <span class="eyebrow">
-                    ACADEMIC WORKSPACE
+                <span>
+                    Total Students
                 </span>
 
-                <h1>
-                    Student Dashboard
-                </h1>
+                <strong id="totalStudents">
+                    0
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- TOTAL SUBJECTS -->
+
+        <div class="stat-card">
+
+            <div class="stat-icon purple">
+                ◈
+            </div>
+
+            <div>
+
+                <span>
+                    Total Subjects
+                </span>
+
+                <strong id="totalSubjects">
+                    0
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- OVERALL AVERAGE -->
+
+        <div class="stat-card">
+
+            <div class="stat-icon green">
+                ✓
+            </div>
+
+            <div>
+
+                <span>
+                    Overall Average
+                </span>
+
+                <strong id="overallAverage">
+                    0.00
+                </strong>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ==================================================
+         STUDENT TABLE
+    ================================================== -->
+
+    <section class="panel">
+
+        <div class="panel-header">
+
+            <div>
+
+                <h2>
+                    Students
+                </h2>
 
                 <p>
-                    A clear overview of students and academic records.
+                    All registered students
                 </p>
 
             </div>
 
 
-            <button
-                class="primary"
-                type="button"
-                onclick="openAddStudent()"
-            >
-
-                <span class="button-icon">
-
-                    <svg
-                        viewBox="0 0 24 24"
-                        aria-hidden="true"
-                    >
-                        <path d="M12 5v14" />
-                        <path d="M5 12h14" />
-                    </svg>
-
-                </span>
-
-                Add Student
-
-            </button>
-
-        </section>
-
-
-
-        <!-- =================================================
-             STATS
-        ================================================== -->
-
-        <section class="stats">
-
-            <article class="stat-card">
-
-                <div class="stat-icon stat-blue">
-
-                    <svg
-                        viewBox="0 0 24 24"
-                        aria-hidden="true"
-                    >
-                        <path
-                            d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"
-                        />
-
-                        <circle
-                            cx="9"
-                            cy="7"
-                            r="4"
-                        />
-
-                        <path
-                            d="M22 21v-2a4 4 0 0 0-3-3.87"
-                        />
-
-                        <path
-                            d="M16 3.13a4 4 0 0 1 0 7.75"
-                        />
-
-                    </svg>
-
-                </div>
-
-                <div class="stat-content">
-
-                    <span>
-                        Total Students
-                    </span>
-
-                    <strong id="totalStudents">
-                        0
-                    </strong>
-
-                    <small>
-                        Registered records
-                    </small>
-
-                </div>
-
-            </article>
-
-
-
-            <article class="stat-card">
-
-                <div class="stat-icon stat-purple">
-
-                    <svg
-                        viewBox="0 0 24 24"
-                        aria-hidden="true"
-                    >
-                        <path
-                            d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"
-                        />
-
-                        <path
-                            d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"
-                        />
-
-                    </svg>
-
-                </div>
-
-                <div class="stat-content">
-
-                    <span>
-                        Total Subjects
-                    </span>
-
-                    <strong id="totalSubjects">
-                        0
-                    </strong>
-
-                    <small>
-                        Academic subjects
-                    </small>
-
-                </div>
-
-            </article>
-
-
-
-            <article class="stat-card">
-
-                <div class="stat-icon stat-green">
-
-                    <svg
-                        viewBox="0 0 24 24"
-                        aria-hidden="true"
-                    >
-                        <path
-                            d="M12 3v18"
-                        />
-
-                        <path
-                            d="M17 7H9.5a3.5 3.5 0 0 0 0 7H14a3.5 3.5 0 0 1 0 7H6"
-                        />
-
-                    </svg>
-
-                </div>
-
-                <div class="stat-content">
-
-                    <span>
-                        Overall Average
-                    </span>
-
-                    <strong id="overallAverage">
-                        0.00
-                    </strong>
-
-                    <small>
-                        Current academic average
-                    </small>
-
-                </div>
-
-            </article>
-
-        </section>
-
-
-
-        <!-- =================================================
-             STUDENTS PANEL
-        ================================================== -->
-
-        <section
-            class="panel"
-            id="students"
-        >
-
-            <div class="panel-header">
-
-                <div class="panel-heading">
-
-                    <div class="panel-title-row">
-
-                        <h2>
-                            Students
-                        </h2>
-
-                        <span class="record-badge">
-                            Academic Records
-                        </span>
-
-                    </div>
-
-                    <p>
-                        View and manage registered student information.
-                    </p>
-
-                </div>
-
-
-                <div class="panel-tools">
-
-                    <div class="search-box">
-
-                        <svg
-                            viewBox="0 0 24 24"
-                            aria-hidden="true"
-                        >
-                            <circle
-                                cx="11"
-                                cy="11"
-                                r="7"
-                            />
-
-                            <path
-                                d="M20 20l-4-4"
-                            />
-
-                        </svg>
-
-                        <input
-                            id="searchInput"
-                            type="search"
-                            placeholder="Search students..."
-                            autocomplete="off"
-                        >
-
-                    </div>
-
-
-                    <button
-                        class="filter-button"
-                        type="button"
-                        title="Student records"
-                    >
-
-                        <svg
-                            viewBox="0 0 24 24"
-                            aria-hidden="true"
-                        >
-                            <path
-                                d="M4 6h16"
-                            />
-
-                            <path
-                                d="M7 12h10"
-                            />
-
-                            <path
-                                d="M10 18h4"
-                            />
-
-                        </svg>
-
-                    </button>
-
-                </div>
-
-            </div>
-
-
-
-            <div class="student-table">
-
-                <table>
-
-                    <thead>
-
-                        <tr>
-
-                            <th>
-                                STUDENT
-                            </th>
-
-                            <th>
-                                ENROLLMENT NO.
-                            </th>
-
-                            <th>
-                                PROGRAMME
-                            </th>
-
-                            <th>
-                                SEMESTER
-                            </th>
-
-                            <th class="action-heading">
-                                ACTION
-                            </th>
-
-                        </tr>
-
-                    </thead>
-
-
-                    <tbody id="studentTable">
-
-                    </tbody>
-
-                </table>
-
-            </div>
-
-
-            <div class="panel-footer">
+            <div class="search-box">
 
                 <span>
-                    Student records are securely managed through StudentHub.
+                    ⌕
                 </span>
 
-                <span class="footer-status">
-
-                    <span class="status-dot"></span>
-
-                    Connected
-
-                </span>
+                <input
+                    id="searchInput"
+                    placeholder="Search students..."
+                >
 
             </div>
 
-        </section>
+        </div>
 
 
+        <div class="student-table">
 
-        <!-- =================================================
-             FOOTER
-        ================================================== -->
+            <table>
 
-        <footer class="main-footer">
+                <thead>
 
-            <span>
-                StudentHub
-            </span>
+                    <tr>
 
-            <span>
-                Academic Management System
-            </span>
+                        <th>
+                            STUDENT
+                        </th>
 
-            <span>
-                © 2026
-            </span>
+                        <th>
+                            ENROLLMENT NO.
+                        </th>
 
-        </footer>
+                        <th>
+                            PROGRAMME
+                        </th>
 
-    </main>
+                        <th>
+                            SEMESTER
+                        </th>
+
+                        <th>
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="studentTable">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
 
 </div>
 
 
 
-<!-- =========================================================
+<!-- ======================================================
      ADD STUDENT MODAL
-========================================================= -->
+====================================================== -->
 
 <div
     id="studentModal"
@@ -748,9 +268,7 @@
 
         <button
             class="modal-close"
-            type="button"
             onclick="closeModal()"
-            aria-label="Close"
         >
             ×
         </button>
@@ -759,29 +277,17 @@
         <div class="modal-title">
 
             <div class="modal-avatar">
-
-                <svg
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                >
-                    <path d="M12 5v14" />
-                    <path d="M5 12h14" />
-                </svg>
-
+                +
             </div>
 
             <div>
-
-                <span class="modal-eyebrow">
-                    NEW RECORD
-                </span>
 
                 <h2>
                     Add Student
                 </h2>
 
                 <p>
-                    Create a complete student record.
+                    Create a complete student record
                 </p>
 
             </div>
@@ -789,244 +295,171 @@
         </div>
 
 
-
         <form id="studentForm">
 
-            <div class="form-section">
 
-                <div class="form-section-heading">
+            <!-- PERSONAL INFORMATION -->
 
-                    <span class="form-number">
-                        01
-                    </span>
+            <h3>
+                Personal Information
+            </h3>
 
-                    <div>
 
-                        <h3>
-                            Personal Information
-                        </h3>
+            <label>
+                Student Name
+            </label>
 
-                        <p>
-                            Basic information about the student
-                        </p>
+            <input
+                id="studentName"
+                placeholder="Enter full name"
+                required
+            >
 
-                    </div>
 
-                </div>
+            <label>
+                Enrollment Number
+            </label>
 
+            <input
+                id="enrollmentNo"
+                placeholder="e.g. PS2026001"
+                required
+            >
 
-                <label for="studentName">
-                    Student Name
-                </label>
 
-                <input
-                    id="studentName"
-                    placeholder="Enter full name"
-                    required
-                >
+            <label>
+                Date of Birth
+            </label>
 
+            <input
+                id="dateOfBirth"
+                type="date"
+            >
 
-                <label for="enrollmentNo">
-                    Enrollment Number
-                </label>
 
-                <input
-                    id="enrollmentNo"
-                    placeholder="e.g. PS2026001"
-                    required
-                >
+            <label>
+                Gender
+            </label>
 
+            <select id="gender">
 
-                <div class="form-grid">
+                <option value="">
+                    Select gender
+                </option>
 
-                    <div>
+                <option value="Male">
+                    Male
+                </option>
 
-                        <label for="dateOfBirth">
-                            Date of Birth
-                        </label>
+                <option value="Female">
+                    Female
+                </option>
 
-                        <input
-                            id="dateOfBirth"
-                            type="date"
-                        >
+                <option value="Other">
+                    Other
+                </option>
 
-                    </div>
+                <option value="Prefer not to say">
+                    Prefer not to say
+                </option>
 
+            </select>
 
-                    <div>
 
-                        <label for="gender">
-                            Gender
-                        </label>
+            <label>
+                Email
+            </label>
 
-                        <select id="gender">
+            <input
+                id="studentEmail"
+                type="email"
+                placeholder="student@example.com"
+            >
 
-                            <option value="">
-                                Select gender
-                            </option>
 
-                            <option value="Male">
-                                Male
-                            </option>
+            <label>
+                Phone
+            </label>
 
-                            <option value="Female">
-                                Female
-                            </option>
+            <input
+                id="studentPhone"
+                type="tel"
+                placeholder="Phone number"
+            >
 
-                            <option value="Other">
-                                Other
-                            </option>
 
-                            <option value="Prefer not to say">
-                                Prefer not to say
-                            </option>
+            <label>
+                Address
+            </label>
 
-                        </select>
+            <textarea
+                id="studentAddress"
+                placeholder="Enter address"
+                rows="3"
+            ></textarea>
 
-                    </div>
 
-                </div>
+            <label>
+                Admission Year
+            </label>
 
+            <input
+                id="admissionYear"
+                type="number"
+                placeholder="2026"
+                min="2000"
+                max="2100"
+            >
 
-                <div class="form-grid">
 
-                    <div>
+            <!-- ACADEMIC INFORMATION -->
 
-                        <label for="studentEmail">
-                            Email
-                        </label>
+            <h3>
+                Academic Information
+            </h3>
 
-                        <input
-                            id="studentEmail"
-                            type="email"
-                            placeholder="student@example.com"
-                        >
 
-                    </div>
+            <label>
+                Programme
+            </label>
 
+            <select
+                id="programmeSelect"
+                required
+            >
 
-                    <div>
+                <option value="">
+                    Select programme
+                </option>
 
-                        <label for="studentPhone">
-                            Phone
-                        </label>
+            </select>
 
-                        <input
-                            id="studentPhone"
-                            type="tel"
-                            placeholder="Phone number"
-                        >
 
-                    </div>
+            <label>
+                Semester
+            </label>
 
-                </div>
+            <select
+                id="semesterSelect"
+                required
+            >
 
+                <option value="">
+                    Select semester
+                </option>
 
-                <label for="studentAddress">
-                    Address
-                </label>
+            </select>
 
-                <textarea
-                    id="studentAddress"
-                    placeholder="Enter address"
-                    rows="3"
-                ></textarea>
 
+            <label>
+                Academic Year
+            </label>
 
-                <label for="admissionYear">
-                    Admission Year
-                </label>
-
-                <input
-                    id="admissionYear"
-                    type="number"
-                    placeholder="2026"
-                    min="2000"
-                    max="2100"
-                >
-
-            </div>
-
-
-
-            <div class="form-section">
-
-                <div class="form-section-heading">
-
-                    <span class="form-number">
-                        02
-                    </span>
-
-                    <div>
-
-                        <h3>
-                            Academic Information
-                        </h3>
-
-                        <p>
-                            Programme and current academic session
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-                <label for="programmeSelect">
-                    Programme
-                </label>
-
-                <select
-                    id="programmeSelect"
-                    required
-                >
-
-                    <option value="">
-                        Select programme
-                    </option>
-
-                </select>
-
-
-                <div class="form-grid">
-
-                    <div>
-
-                        <label for="semesterSelect">
-                            Semester
-                        </label>
-
-                        <select
-                            id="semesterSelect"
-                            required
-                        >
-
-                            <option value="">
-                                Select semester
-                            </option>
-
-                        </select>
-
-                    </div>
-
-
-                    <div>
-
-                        <label for="academicYear">
-                            Academic Year
-                        </label>
-
-                        <input
-                            id="academicYear"
-                            placeholder="2026-27"
-                            required
-                        >
-
-                    </div>
-
-                </div>
-
-            </div>
+            <input
+                id="academicYear"
+                placeholder="2026-27"
+                required
+            >
 
 
             <button
@@ -1034,23 +467,7 @@
                 type="submit"
             >
 
-                <span>
-                    Create Student Record
-                </span>
-
-                <svg
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                >
-                    <path
-                        d="M5 12h14"
-                    />
-
-                    <path
-                        d="M13 6l6 6-6 6"
-                    />
-
-                </svg>
+                Create Student
 
             </button>
 
@@ -1062,9 +479,9 @@
 
 
 
-<!-- =========================================================
+<!-- ======================================================
      STUDENT DETAILS MODAL
-========================================================= -->
+====================================================== -->
 
 <div
     id="detailsModal"
@@ -1075,13 +492,13 @@
 
         <button
             class="modal-close"
-            type="button"
             onclick="closeDetails()"
-            aria-label="Close"
         >
             ×
         </button>
 
+
+        <!-- STUDENT PROFILE -->
 
         <div class="student-profile">
 
@@ -1093,11 +510,7 @@
             </div>
 
 
-            <div class="profile-main">
-
-                <span class="modal-eyebrow">
-                    STUDENT PROFILE
-                </span>
+            <div>
 
                 <h2 id="detailName">
                     Student
@@ -1112,20 +525,18 @@
         </div>
 
 
+        <!-- ACADEMIC HEADER -->
+
         <div class="subject-header">
 
             <div>
-
-                <span class="modal-eyebrow">
-                    RECORD DETAILS
-                </span>
 
                 <h3>
                     Academic Information
                 </h3>
 
                 <p>
-                    Student details and academic records.
+                    Student details and academic records
                 </p>
 
             </div>
@@ -1133,72 +544,30 @@
         </div>
 
 
+        <!-- DETAILS -->
+
         <div id="studentDetails">
 
         </div>
 
 
+        <!-- ACTIONS -->
+
         <div class="detail-actions">
 
             <button
                 class="secondary"
-                type="button"
                 onclick="editStudent()"
             >
-
-                <svg
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                >
-                    <path
-                        d="M12 20h9"
-                    />
-
-                    <path
-                        d="M16.5 3.5a2.12 2.12 0 0 1 3 3L8 18l-4 1 1-4z"
-                    />
-
-                </svg>
-
                 Edit Student
-
             </button>
 
 
             <button
                 class="danger"
-                type="button"
                 onclick="deleteStudent()"
             >
-
-                <svg
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                >
-                    <path
-                        d="M3 6h18"
-                    />
-
-                    <path
-                        d="M8 6V4h8v2"
-                    />
-
-                    <path
-                        d="M19 6l-1 15H6L5 6"
-                    />
-
-                    <path
-                        d="M10 11v6"
-                    />
-
-                    <path
-                        d="M14 11v6"
-                    />
-
-                </svg>
-
                 Delete Student
-
             </button>
 
         </div>
@@ -1209,13 +578,26 @@
 
 
 
+<!-- ======================================================
+     DEVELOPER WATERMARK
+====================================================== -->
+
+<div
+    class="github-watermark"
+    aria-hidden="true"
+>
+    <span>©</span> sensei-desu
+</div>
+
+
+
+<!-- ======================================================
+     JAVASCRIPT
+====================================================== -->
+
 <script src="script.js?v=4"></script>
+
 
 </body>
 
 </html>
-
-<!-- GitHub Watermark -->
-<div class="github-watermark">
-    <span>©</span> sensei-desu
-</div>
